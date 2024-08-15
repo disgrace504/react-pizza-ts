@@ -1,29 +1,41 @@
+import { useState } from 'react'
+
 interface IPizzaProps {
   title: string
   price: number
+  sizes: number[]
+  imageUrl: string
+  types: number[]
 }
 
-export const Pizza = ({ title, price }: IPizzaProps) => {
+export const Pizza = ({ title, price, sizes, imageUrl, types }: IPizzaProps) => {
+  const [addedToCart, setAddedToCart] = useState(0)
+  const [selectedSize, setSelectedSize] = useState(0)
+  const [selectedType, setSelectedType] = useState(0)
+  const titleType = ['тонкое', 'традиционное']
+
   return (
     <div className='pizza-block'>
-      <img
-        className='pizza-block__image'
-        src='https://media.dodostatic.net/image/r:233x233/11EE7D61698827EE9B8DB6D0AEC53410.avif'
-        alt='Pizza'
-      />
+      <img className='pizza-block__image' src={imageUrl} alt='Pizza' />
       <h4 className='pizza-block__title'>{title}</h4>
       <div className='pizza-block__selector'>
         <ul>
-          <li className='active'>тонкое</li>
-          <li>традиционное</li>
+          {sizes.map((size, index) => (
+            <li
+              key={index}
+              onClick={() => setSelectedSize(index)}
+              className={selectedSize === index ? 'active' : ''}>{`${size} см.`}</li>
+          ))}
         </ul>
         <ul>
-          <li className='active'>26 см.</li>
-          <li>30 см.</li>
-          <li>40 см.</li>
+          {types.map((type, index) => (
+            <li key={index} onClick={() => setSelectedType(index)} className={selectedType === index ? 'active' : ''}>
+              {titleType[type]}
+            </li>
+          ))}
         </ul>
       </div>
-      <div className='pizza-block__bottom'>
+      <div onClick={() => setAddedToCart(addedToCart + 1)} className='pizza-block__bottom'>
         <div className='pizza-block__price'>{`от ${price} руб.`}</div>
         <div className='button button--outline button--add'>
           <svg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -33,7 +45,7 @@ export const Pizza = ({ title, price }: IPizzaProps) => {
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
+          <i>{addedToCart}</i>
         </div>
       </div>
     </div>
