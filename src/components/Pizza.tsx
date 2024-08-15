@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
-interface IPizzaProps {
+export interface IPizzaProps {
+  id: number
   title: string
   price: number
   sizes: number[]
