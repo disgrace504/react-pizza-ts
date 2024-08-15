@@ -1,13 +1,16 @@
-@import '../_variables';
-
 .sort {
   position: relative;
+
   &__label {
     display: flex;
     align-items: center;
 
     svg {
       margin-right: 8px;
+      transition: transform 0.3s ease;
+      &.active {
+        transform: rotate(180deg);
+      }
     }
 
     b {
