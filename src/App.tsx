@@ -11,13 +11,11 @@ export const App = () => {
       <div className='wrapper'>
         <Header />
         <div className='content'>
-          <div className='container'>
-            <Routes>
-              <Route path='/' element={<Main />} />
-              <Route path='*' element={<NotFound />} />
-              <Route path='/cart' element={<Cart />} />
-            </Routes>
-          </div>
+          <Routes>
+            <Route path='/' element={<Main />} />
+            <Route path='*' element={<NotFound />} />
+            <Route path='/cart' element={<Cart />} />
+          </Routes>
         </div>
       </div>
     </BrowserRouter>

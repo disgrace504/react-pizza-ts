@@ -4,6 +4,22 @@
 
 @import 'components/all';
 
+::-webkit-scrollbar {
+  height: 7px;
+  width: 7px;
+  background-color: none;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: $orange;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: none;
+}
+
 body {
   background-color: $background;
 }
@@ -15,26 +31,88 @@ body {
   margin: 50px auto;
   border-radius: 10px;
   max-width: 1400px;
+
+  @media (max-width: 800px) {
+    width: calc(100vw - 40px);
+    margin-top: 20px;
+  }
+
+  @media (max-width: 600px) {
+    width: calc(100vw - 20px);
+    margin-top: 10px;
+  }
 }
 
 .content {
   padding: 40px 0;
 
   &__title {
-    margin: 40px 0;
+    font-weight: 800;
+    font-size: 38px;
+    margin: 30px 0;
   }
 
   &__items {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 11px;
 
-    align-content: space-around;
+    @media (max-width: 1400px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 1100px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 800px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
 
   &__top {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media (max-width: 1270px) {
+      .categories {
+        width: 100%;
+        overflow: auto;
+        ul {
+          width: 810px;
+        }
+      }
+      .sort {
+        margin-left: 20px;
+        b {
+          display: none;
+        }
+      }
+    }
+
+    @media (max-width: 800px) {
+      flex-direction: column;
+
+      .categories {
+        ul {
+          width: 610px;
+        }
+      }
+
+      .sort {
+        margin-top: 20px;
+      }
+    }
+    @media (max-width: 800px) {
+      .categories {
+        ul {
+          li {
+            padding: 8px 20px;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -56,12 +134,19 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    @media (max-width: 500px) {
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
   .content__title {
     display: flex;
     align-items: center;
     font-size: 32px;
+
+    @media (max-width: 800px) {
+    }
 
     svg {
       position: relative;
@@ -107,6 +192,10 @@ body {
     }
   }
 
+  .content__items {
+    display: block;
+  }
+
   &__item {
     display: flex;
     width: 100%;
@@ -114,11 +203,55 @@ body {
     padding-top: 30px;
     margin-top: 30px;
 
+    @media (max-width: 800px) {
+      flex-direction: column;
+      align-items: center;
+
+      .cart__item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        &-img {
+          justify-content: center;
+          margin-bottom: 15px;
+        }
+        &-info {
+          align-items: center;
+          text-align: center;
+          width: 100%;
+          max-width: none;
+        }
+        &-count {
+          justify-content: center;
+          margin-top: 10px;
+          .button {
+            padding: 0 10px;
+          }
+          b {
+            margin: 0 10px;
+          }
+        }
+        &-price {
+          margin-top: 10px;
+          justify-content: center;
+        }
+        &-remove {
+          justify-content: center;
+          margin-top: 15px;
+        }
+      }
+    }
+
     &-img {
       display: flex;
       align-items: center;
       margin-right: 15px;
       width: 10%;
+
+      @media (max-width: 800px) {
+        padding-left: 10px;
+      }
 
       img {
         width: 80px;
@@ -150,6 +283,10 @@ body {
       align-items: center;
       justify-content: space-between;
       width: 13%;
+
+      @media (max-width: 800px) {
+        padding-right: 7px;
+      }
 
       &-minus {
         svg {
@@ -213,9 +350,22 @@ body {
   &__bottom {
     margin: 50px 0;
 
+    @media (max-width: 800px) {
+      flex-direction: column;
+      align-items: center;
+      span {
+        margin: 10px;
+      }
+    }
+
     &-details {
       display: flex;
       justify-content: space-between;
+
+      @media (max-width: 500px) {
+        flex-direction: column;
+        align-items: center;
+      }
 
       span {
         font-size: 22px;
@@ -232,6 +382,16 @@ body {
       display: flex;
       justify-content: space-between;
       margin-top: 40px;
+
+      @media (max-width: 500px) {
+        flex-direction: column;
+        align-items: center;
+        .go-back-btn,
+        .pay-btn {
+          width: 100%;
+          margin-bottom: 10px;
+        }
+      }
 
       .go-back-btn {
         display: flex;
@@ -256,7 +416,7 @@ body {
           }
         }
 
-        svg {
+        img {
           margin-right: 12px;
           path {
             fill: transparent;
