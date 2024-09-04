@@ -4,20 +4,23 @@ import { Main } from './Pages/Main'
 import './assets/app.scss'
 import { NotFound } from './Pages/NotFound'
 import { Cart } from './Pages/Cart'
+import { AppProvider } from './Providers/AppProvider'
 
 export const App = () => {
   return (
-    <BrowserRouter>
-      <div className='wrapper'>
-        <Header />
-        <div className='content'>
-          <Routes>
-            <Route path='/' element={<Main />} />
-            <Route path='*' element={<NotFound />} />
-            <Route path='/cart' element={<Cart />} />
-          </Routes>
+    <AppProvider>
+      <BrowserRouter>
+        <div className='wrapper'>
+          <Header />
+          <div className='content'>
+            <Routes>
+              <Route path='/' element={<Main />} />
+              <Route path='*' element={<NotFound />} />
+              <Route path='/cart' element={<Cart />} />
+            </Routes>
+          </div>
         </div>
-      </div>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AppProvider>
   )
 }

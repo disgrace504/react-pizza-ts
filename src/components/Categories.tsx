@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useContext } from 'react'
+import { AppContext } from '../Providers/AppProvider'
 
 export const Categories = () => {
-  const [activeCategory, setActiveCategory] = useState(1)
+  const { activeCategory, setActiveCategory } = useContext(AppContext)!
   const categories = [
     {
       title: 'Все',

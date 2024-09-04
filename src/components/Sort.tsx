@@ -1,14 +1,22 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { AppContext } from '../Providers/AppProvider'
 
 export const Sort = () => {
   const [sortListIsVisible, setSortListIsVisible] = useState(false)
-  const [selectedSort, setSelectedSort] = useState(0)
+  const { selectedSort, setSelectedSort } = useContext(AppContext)!
 
-  const sortList = ['популярности', 'цене', 'алфавиту']
-  const sortTitle = sortList[selectedSort]
+  const sortList = [
+    { id: 0, title: 'популярности(DESC)', sortProperty: 'rating' },
+    { id: 1, title: 'популярности(ASC)', sortProperty: '-rating' },
+    { id: 2, title: 'цене(DESC)', sortProperty: 'price' },
+    { id: 3, title: 'цене(ASC)', sortProperty: '-price' },
+    { id: 4, title: 'алфавиту(DESC)', sortProperty: 'title' },
+    { id: 5, title: 'алфавиту(ASC)', sortProperty: '-title' },
+  ]
+  const sortTitle = selectedSort.title
 
-  const onSortBy = (index: number) => {
-    setSelectedSort(index)
+  const onSortBy = (sort: { id: number; title: string; sortProperty: string }) => {
+    setSelectedSort(sort)
     setSortListIsVisible(false)
   }
 
@@ -33,9 +41,12 @@ export const Sort = () => {
       {sortListIsVisible && (
         <div className='sort__popup'>
           <ul>
-            {sortList.map((sortBy, index) => (
-              <li key={index} className={selectedSort === index ? 'active' : ''} onClick={() => onSortBy(index)}>
-                {sortBy}
+            {sortList.map((sortBy) => (
+              <li
+                key={sortBy.id}
+                className={selectedSort.id === sortBy.id ? 'active' : ''}
+                onClick={() => onSortBy(sortBy)}>
+                {sortBy.title}
               </li>
             ))}
           </ul>
