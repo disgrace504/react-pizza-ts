@@ -19,5 +19,5 @@ export const useFetching = (callback: (...args: any) => Promise<any>) => {
     }
   }
 
-  return [fetching, isLoading, error] as const
+  return [fetching, isLoading, error, setError] as const
 }
