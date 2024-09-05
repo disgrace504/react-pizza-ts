@@ -12,13 +12,14 @@ export const PizzasList = () => {
 
   const [pizzas, setPizzas] = useState<IPizzaProps[]>([])
 
-  const sortBy = selectedSort.sortProperty.replace('-', '')
-  const order = selectedSort.sortProperty.includes('-') ? 'asc' : 'desc'
-  const filterCategory = activeCategory > 0 ? `category=${activeCategory}` : ''
-  const options = `?${filterCategory}` + `&sortBy=${sortBy}&order=${order}`
+  const params = {
+    category: activeCategory > 0 ? activeCategory : undefined,
+    sortBy: selectedSort.sortProperty.replace('-', ''),
+    order: selectedSort.sortProperty.includes('-') ? 'asc' : 'desc',
+  }
 
   const [fetchPizzas, isPizzasLoading] = useFetching(async () => {
-    const response = await getPizzas(pizzasUrl, options)
+    const response = await getPizzas(pizzasUrl, params)
     setPizzas(response.data)
   })
 
