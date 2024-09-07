@@ -1,6 +1,7 @@
 import { PizzasList } from '../components/PizzasList'
 import { Sort } from '../components/Sort'
 import { Categories } from '../components/Categories'
+import { Pagination } from '../components/Pagination/Pagination'
 
 export const Main = () => {
   return (
@@ -11,6 +12,7 @@ export const Main = () => {
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <PizzasList />
+      <Pagination />
     </div>
   )
 }

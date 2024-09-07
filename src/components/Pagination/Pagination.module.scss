@@ -1,0 +1,32 @@
+.pagination {
+  li {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+      text-align: center;
+      line-height: 38px;
+      margin: 2px;
+      width: 40px;
+      height: 40px;
+      border: 1px solid #fe5f1e;
+      border-radius: 30px;
+      cursor: pointer;
+      color: #fe5f1e;
+      &:hover {
+        background-color: #fe5f1e;
+        color: rgba($color: #ffffff, $alpha: 1);
+      }
+    }
+  }
+
+  :global {
+    .selected {
+      a {
+        background-color: #fe5f1e;
+        color: rgba($color: #ffffff, $alpha: 1);
+      }
+    }
+  }
+}
