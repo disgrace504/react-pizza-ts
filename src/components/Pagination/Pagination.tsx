@@ -1,10 +1,10 @@
 import ReactPaginate from 'react-paginate'
 import cls from './Pagination.module.scss'
-import { useContext } from 'react'
-import { AppContext } from '../../Providers/AppProvider'
+import { useDispatch } from 'react-redux'
+import { setCurrentPage } from '../../redux/slices/paginationSlice'
 
 export const Pagination = () => {
-  const { setCurrentPage } = useContext(AppContext)!
+  const dispatch = useDispatch()
 
   return (
     <>
@@ -13,7 +13,7 @@ export const Pagination = () => {
         breakLabel='...'
         nextLabel='>'
         previousLabel='<'
-        onPageChange={(event) => setCurrentPage(event.selected + 1)}
+        onPageChange={(event) => dispatch(setCurrentPage(event.selected))}
         pageRangeDisplayed={2}
         // Мокапи не может возвращать кол-во страниц, поэтому захардкодил
         pageCount={3}

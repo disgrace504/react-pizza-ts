@@ -1,34 +1,15 @@
-import { useContext } from 'react'
-import { AppContext } from '../Providers/AppProvider'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../redux/store'
+import { setActiveCategory } from '../redux/slices/filtersSlice'
+import { categories } from '../data/data'
 
 export const Categories = () => {
-  const { activeCategory, setActiveCategory } = useContext(AppContext)!
-  const categories = [
-    {
-      title: 'Все',
-      index: 0,
-    },
-    {
-      title: 'Мясные',
-      index: 1,
-    },
-    {
-      title: 'Вегетарианская',
-      index: 2,
-    },
-    {
-      title: 'Гриль',
-      index: 3,
-    },
-    {
-      title: 'Острые',
-      index: 4,
-    },
-    {
-      title: 'Закрытые',
-      index: 5,
-    },
-  ]
+  const activeCategory = useSelector((state: RootState) => state.filters.activeCategory.index)
+  const dispatch = useDispatch()
+
+  const onChangeCategory = (index: number) => {
+    dispatch(setActiveCategory({ index }))
+  }
 
   return (
     <div className='categories'>
@@ -36,7 +17,7 @@ export const Categories = () => {
         {categories.map((category) => (
           <li
             key={category.index}
-            onClick={() => setActiveCategory(category.index)}
+            onClick={() => onChangeCategory(category.index)}
             className={activeCategory === category.index ? 'active' : ''}>
             {category.title}
           </li>

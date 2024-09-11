@@ -1,9 +1,13 @@
-import { useContext } from 'react'
 import cls from './Search.module.scss'
-import { AppContext } from '../../Providers/AppProvider'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../../redux/store'
+import { setSearchValue } from '../../redux/slices/filtersSlice'
 
 export const Search = () => {
-  const { searchValue, setSearchValue } = useContext(AppContext)!
+  const searchValue = useSelector((state: RootState) => state.filters.searchValue)
+  const dispatch = useDispatch()
+
   return (
     <div className={cls.search}>
       <svg
@@ -18,13 +22,13 @@ export const Search = () => {
       <input
         className={cls.searchInput}
         value={searchValue}
-        onChange={(event) => setSearchValue(event.target.value)}
+        onChange={(event) => dispatch(setSearchValue(event.target.value))}
         type='text'
         placeholder='Найти питсу...'
       />
       {searchValue && (
         <svg
-          onClick={() => setSearchValue('')}
+          onClick={() => dispatch(setSearchValue(''))}
           className={cls.clearIcon}
           xmlns='http://www.w3.org/2000/svg'
           viewBox='0 0 24 24'>

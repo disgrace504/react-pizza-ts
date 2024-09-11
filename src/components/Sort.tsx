@@ -1,22 +1,18 @@
-import { useContext, useState } from 'react'
-import { AppContext } from '../Providers/AppProvider'
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../redux/store'
+import { sortList } from '../data/data'
+import { setSelectedSort } from '../redux/slices/filtersSlice'
 
 export const Sort = () => {
-  const [sortListIsVisible, setSortListIsVisible] = useState(false)
-  const { selectedSort, setSelectedSort } = useContext(AppContext)!
-
-  const sortList = [
-    { id: 0, title: 'популярности(DESC)', sortProperty: 'rating' },
-    { id: 1, title: 'популярности(ASC)', sortProperty: '-rating' },
-    { id: 2, title: 'цене(DESC)', sortProperty: 'price' },
-    { id: 3, title: 'цене(ASC)', sortProperty: '-price' },
-    { id: 4, title: 'алфавиту(DESC)', sortProperty: 'title' },
-    { id: 5, title: 'алфавиту(ASC)', sortProperty: '-title' },
-  ]
+  const selectedSort = useSelector((state: RootState) => state.filters.selectedSort)
   const sortTitle = selectedSort.title
+  const dispatch = useDispatch()
+
+  const [sortListIsVisible, setSortListIsVisible] = useState(false)
 
   const onSortBy = (sort: { id: number; title: string; sortProperty: string }) => {
-    setSelectedSort(sort)
+    dispatch(setSelectedSort(sort))
     setSortListIsVisible(false)
   }
 

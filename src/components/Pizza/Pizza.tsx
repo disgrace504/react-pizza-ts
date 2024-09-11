@@ -1,15 +1,7 @@
 import { useState } from 'react'
+import { IPizza } from '../../types/pizza.types'
 
-export interface IPizzaProps {
-  id: number
-  title: string
-  price: number
-  sizes: number[]
-  imageUrl: string
-  types: number[]
-}
-
-export const Pizza = ({ title, price, sizes, imageUrl, types }: IPizzaProps) => {
+export const Pizza = ({ title, price, sizes, imageUrl, types }: IPizza) => {
   const [addedToCart, setAddedToCart] = useState(0)
   const [selectedSize, setSelectedSize] = useState(0)
   const [selectedType, setSelectedType] = useState(0)
