@@ -1,6 +1,6 @@
 //TODO: перевести на redux
 
-import { createContext, ReactNode, useEffect } from 'react'
+import { createContext, ReactNode, useEffect, useRef } from 'react'
 import { useDebounce } from '../hooks/useDebounce'
 import { useFetching } from '../hooks/useFetching'
 import { getPizzas } from '../API/pizzasService'
@@ -8,6 +8,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
 import { getPizzasParams } from '../helpers/queryParams'
 import { setPizzas } from '../redux/slices/pizzasSlice'
+import { useNavigate } from 'react-router-dom'
+import qs from 'qs'
+import { setUrlFilters } from '../redux/slices/filtersSlice'
+import { categories, sortList } from '../data/data'
 
 const pizzasUrl = import.meta.env.VITE_PIZZAS_URL
 interface AppContextInterface {
@@ -22,9 +26,12 @@ export const AppContext = createContext<AppContextInterface | undefined>(undefin
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   const { selectedSort, searchValue, activeCategory } = useSelector((state: RootState) => state.filters)
 
+  const navigate = useNavigate()
   const dispatch = useDispatch()
+  const isUrlFilters = useRef(false)
+  const isMounted = useRef(false)
 
-  const currentPage = useSelector((state: RootState) => state.pagination.currentPage)
+  const currentPage = useSelector((state: RootState) => state.filters.currentPage)
 
   const debouncedSearchValue = useDebounce(searchValue, 700)
 
@@ -37,7 +44,37 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   })
 
   useEffect(() => {
-    fetchPizzas()
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        sortBy: selectedSort.sortProperty,
+        category: activeCategory.index,
+        currentPage: currentPage,
+      })
+      navigate(`?${queryString}`)
+    }
+
+    isMounted.current = true
+  }, [activeCategory, selectedSort, currentPage])
+
+  useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1))
+
+      const sort = sortList.find((obj) => obj.sortProperty === params.sortBy)
+      const category = categories.find((obj) => obj.index === Number(params.category))
+      const currentPage = params.currentPage
+
+      dispatch(setUrlFilters({ currentPage, sort, category }))
+      isUrlFilters.current = true
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!isUrlFilters.current) {
+      fetchPizzas()
+    }
+    isUrlFilters.current = false
+
     if (debouncedSearchValue) {
       setPizzaError('')
     }

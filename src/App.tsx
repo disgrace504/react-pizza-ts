@@ -8,8 +8,8 @@ import { AppProvider } from './Providers/AppProvider'
 
 export const App = () => {
   return (
-    <AppProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AppProvider>
         <div className='wrapper'>
           <Header />
           <div className='content'>
@@ -20,7 +20,7 @@ export const App = () => {
             </Routes>
           </div>
         </div>
-      </BrowserRouter>
-    </AppProvider>
+      </AppProvider>
+    </BrowserRouter>
   )
 }

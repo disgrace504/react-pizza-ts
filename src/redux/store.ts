@@ -1,13 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import pizzasReducer from './slices/pizzasSlice'
 import filtersReducer from './slices/filtersSlice'
-import paginationReducer from './slices/paginationSlice'
 
 export const store = configureStore({
   reducer: {
     pizzas: pizzasReducer,
     filters: filtersReducer,
-    pagination: paginationReducer,
   },
 })
 
