@@ -5,4 +5,6 @@ export interface IPizza {
   sizes: number[]
   imageUrl: string
   types: number[]
+  type: number
+  count: number
 }

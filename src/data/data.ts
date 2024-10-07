@@ -15,3 +15,5 @@ export const sortList = [
   { id: 4, title: 'алфавиту(DESC)', sortProperty: 'title' },
   { id: 5, title: 'алфавиту(ASC)', sortProperty: '-title' },
 ]
+
+export const titleType = ['тонкое', 'традиционное']

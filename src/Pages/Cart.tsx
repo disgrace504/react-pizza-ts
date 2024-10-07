@@ -1,32 +1,38 @@
 import { Link } from 'react-router-dom'
 import { CartItem } from '../components/CartItem'
+import { RootState } from '../redux/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { clearCart } from '../redux/slices/cartSlice'
+import { EmptyCart } from '../components/EmptyCart'
 
 export const Cart = () => {
-  return (
+  const totalPrice = useSelector((state: RootState) => state.cart.totalPrice)
+  const totalPizzas = useSelector((state: RootState) => state.cart.totalPizzas) // Получаем из Redux
+  const cartPizzas = useSelector((state: RootState) => state.cart.cartPizzas)
+  const cartPizzasItems = cartPizzas.map((pizza) => <CartItem key={pizza.id} {...pizza} />)
+
+  const dispatch = useDispatch()
+
+  return cartPizzas.length > 0 ? (
     <div className='container'>
       <div className='cart'>
         <div className='cart__top'>
           <h2 className='content__title'>
             <img src='../../public/img/cart.svg' alt='' /> Корзина
           </h2>
-          <div className='cart__clear'>
+          <div onClick={() => dispatch(clearCart())} className='cart__clear'>
             <img src='../../public/img/trash.svg' alt='' />
             <span>Очистить корзину</span>
           </div>
         </div>
-        <div className='content__items'>
-          <CartItem />
-          <CartItem />
-          <CartItem />
-          <CartItem />
-        </div>
+        <div className='content__items'>{cartPizzasItems}</div>
         <div className='cart__bottom'>
           <div className='cart__bottom-details'>
             <span>
-              Всего пицц: <b>3 шт.</b>
+              Всего пицц: <b>{totalPizzas} шт.</b>
             </span>
             <span>
-              Сумма заказа: <b>900 ₽</b>
+              Сумма заказа: <b>{totalPrice} ₽</b>
             </span>
           </div>
           <div className='cart__bottom-buttons'>
@@ -41,5 +47,7 @@ export const Cart = () => {
         </div>
       </div>
     </div>
+  ) : (
+    <EmptyCart />
   )
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
 import { sortList } from '../data/data'
@@ -8,6 +8,7 @@ export const Sort = () => {
   const selectedSort = useSelector((state: RootState) => state.filters.selectedSort)
   const sortTitle = selectedSort.title
   const dispatch = useDispatch()
+  const sortRef = useRef<HTMLDivElement | null>(null)
 
   const [sortListIsVisible, setSortListIsVisible] = useState(false)
 
@@ -16,8 +17,22 @@ export const Sort = () => {
     setSortListIsVisible(false)
   }
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
+        setSortListIsVisible(false)
+      }
+    }
+
+    document.body.addEventListener('click', handleClickOutside)
+
+    return () => {
+      document.body.removeEventListener('click', handleClickOutside)
+    }
+  }, [])
+
   return (
-    <div className='sort'>
+    <div ref={sortRef} className='sort'>
       <div className='sort__label'>
         <svg
           className={sortListIsVisible === true ? 'active' : ''}
