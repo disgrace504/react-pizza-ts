@@ -1,8 +1,10 @@
+import { IParams } from '../types/pizza.types'
+
 export const getPizzasParams = (
-  activeCategory: number,
-  selectedSort: { sortProperty: string },
-  searchValue: string,
-  currentPage: number
+  activeCategory: IParams['activeCategory'],
+  selectedSort: IParams['selectedSort'],
+  searchValue: IParams['searchValue'],
+  currentPage: IParams['currentPage']
 ) => {
   const itemsPerPage = 4
 
