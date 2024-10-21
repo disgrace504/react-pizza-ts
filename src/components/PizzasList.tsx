@@ -4,11 +4,9 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
 
 export const PizzasList = () => {
-  // Получаем статус загрузки и ошибки из состояния Redux
   const status = useSelector((state: RootState) => state.pizzas.status)
   const pizzas = useSelector((state: RootState) => state.pizzas.pizzas)
 
-  // Генерация скелетонов и пицц
   const skeletons = [...new Array(12)].map((_, index) => <PizzaSkeleton key={index} />)
   const pizzasItems = pizzas.map((pizza) => <Pizza key={pizza.id} {...pizza} />)
 
